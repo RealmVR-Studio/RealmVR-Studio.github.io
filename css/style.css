@@ -1,0 +1,147 @@
+* {
+    background-color: #000000;
+}
+
+body,
+h1,
+p {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #000000;
+    color: #8fa9b9;
+    text-align: center;
+}
+
+.logo {
+    max-width: 300px;
+    margin-top: 2rem;
+}
+
+.content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.content p {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    background-color: #000000;
+}
+
+.progress-bar {
+    width: 50%;
+    background-color: #102739;
+    border-radius: 2rem;
+    margin: 2rem auto;
+    overflow: hidden;
+}
+
+.progress {
+    height: 1rem;
+    width: 0;
+    background-color: #8fa9b9;
+    animation: progressAnim 2s infinite;
+    border-radius: 2rem;
+}
+
+@keyframes progressAnim {
+    0% {
+        width: 0;
+    }
+
+    50% {
+        width: 30%;
+    }
+
+    100% {
+        width: 0;
+    }
+}
+
+button {
+    margin: 0 auto;
+    width: 300px;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+    font-size: 1rem;
+    color: #bed8e6;
+    background-color: #405E8A;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+button strong {
+    background-color: #405E8A;
+}
+
+button:hover {
+    background-color: #a0b1c1;
+}
+
+footer {
+    padding: 1rem;
+    background-color: #102739;
+}
+
+footer p {
+    background-color: #102739;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #c5cacf;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 80%;
+    color: #143547;
+}
+
+.modal-content strong,
+p,
+span {
+    background-color: #c5cacf;
+}
+
+.close {
+    color: #888;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
