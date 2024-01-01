@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="js/aframe.min.js"></script>
+    <title>Acampamento VR</title>
+    <style>
+      #development-warning {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.7);
+        border-radius: 5px;
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+        font-size: 2em;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div id="development-warning">Em Projeto</div>
+
+    <a-scene>
+      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#03d400"></a-plane>
+      <a-sky color="#87CEEB"></a-sky>
+      <a-light type="ambient" color="#445451"></a-light>
+      <a-entity id="forest"></a-entity>
+      <a-camera position="0 1.6 10"></a-camera>
+
+      <script>
+        function createTree() {
+          var tree = document.createElement('a-entity');
+          var trunk = document.createElement('a-cylinder');
+          var leaves = document.createElement('a-cone');
+          
+          var trunkHeight = 4 + Math.random() * 2;
+          var trunkRadius = 0.25 + Math.random() * 0.25;
+          var leavesHeight = 3 + Math.random() * 2;
+          var leavesRadius = 1.5 + Math.random() * 1.5;
+
+          trunk.setAttribute('height', trunkHeight);
+          trunk.setAttribute('radius', trunkRadius);
+          trunk.setAttribute('color', '#8B4513');
+
+          leaves.setAttribute('position', `0 ${trunkHeight-2} 0`); 
+          leaves.setAttribute('radius', leavesRadius);
+          leaves.setAttribute('height', leavesHeight);
+          leaves.setAttribute('color', '#006400');
+          
+          var x = (Math.random() - 0.5) * 100;
+          var y = trunkHeight / 2;
+          var z = (Math.random() - 0.5) * 100;
+          tree.setAttribute('position', `${x} ${y} ${z}`);
+          
+          tree.appendChild(trunk);
+          tree.appendChild(leaves);
+
+          return tree;
+        }
+
+        function createBush() {
+          var bush = document.createElement('a-sphere');
+          
+          var scale = 0.5 + Math.random();
+
+          bush.setAttribute('radius', scale);
+          bush.setAttribute('color', 'green');
+
+          var x = (Math.random() - 0.5) * 100;
+          var y = scale / 2;
+          var z = (Math.random() - 0.5) * 100;
+          bush.setAttribute('position', `${x} ${y} ${z}`);
+
+          return bush;
+        }
+
+        var forestEl = document.querySelector('#forest');
+        for (var i = 0; i < 30; i++) {
+          forestEl.appendChild(createTree());
+          forestEl.appendChild(createBush());
+        }
+      </script>
+    </a-scene>
+  </body>
+  
+</html>
