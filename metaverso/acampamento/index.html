@@ -25,66 +25,78 @@
     <div id="development-warning">Em Projeto</div>
 
     <a-scene>
-      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#03d400"></a-plane>
-      <a-sky color="#87CEEB"></a-sky>
+      <a-plane position="0 0 0" rotation="-90 0 0" width="100" height="100" color="#004f18"></a-plane>
+      <a-sky color="#141d38" src="assets/star-sky-texture.jpg"></a-sky>
+      <a-sphere position="20 20 -30" radius="2" src="assets/moon-texture.jpg"></a-sphere>
       <a-light type="ambient" color="#445451"></a-light>
       <a-entity id="forest"></a-entity>
       <a-camera position="0 1.6 10"></a-camera>
 
-      <script>
-        function createTree() {
-          var tree = document.createElement('a-entity');
-          var trunk = document.createElement('a-cylinder');
-          var leaves = document.createElement('a-cone');
-          
-          var trunkHeight = 4 + Math.random() * 2;
-          var trunkRadius = 0.25 + Math.random() * 0.25;
-          var leavesHeight = 3 + Math.random() * 2;
-          var leavesRadius = 1.5 + Math.random() * 1.5;
-
-          trunk.setAttribute('height', trunkHeight);
-          trunk.setAttribute('radius', trunkRadius);
-          trunk.setAttribute('color', '#8B4513');
-
-          leaves.setAttribute('position', `0 ${trunkHeight-2} 0`); 
-          leaves.setAttribute('radius', leavesRadius);
-          leaves.setAttribute('height', leavesHeight);
-          leaves.setAttribute('color', '#006400');
-          
-          var x = (Math.random() - 0.5) * 100;
-          var y = trunkHeight / 2;
-          var z = (Math.random() - 0.5) * 100;
-          tree.setAttribute('position', `${x} ${y} ${z}`);
-          
-          tree.appendChild(trunk);
-          tree.appendChild(leaves);
-
-          return tree;
-        }
-
-        function createBush() {
-          var bush = document.createElement('a-sphere');
-          
-          var scale = 0.5 + Math.random();
-
-          bush.setAttribute('radius', scale);
-          bush.setAttribute('color', 'green');
-
-          var x = (Math.random() - 0.5) * 100;
-          var y = scale / 2;
-          var z = (Math.random() - 0.5) * 100;
-          bush.setAttribute('position', `${x} ${y} ${z}`);
-
-          return bush;
-        }
-
-        var forestEl = document.querySelector('#forest');
-        for (var i = 0; i < 30; i++) {
-          forestEl.appendChild(createTree());
-          forestEl.appendChild(createBush());
-        }
-      </script>
+      <a-sphere position="0 0 0" color="#ff5930" radius="0.5"></a-circle>
+      <a-light type="point" position="0 1 0" intensity="2" distance="10" color="#ff9d00"></a-light>
+      
+      <a-box position="-2 0.25 0" rotation="0 0 0" width="1" height="0.5" depth="1" color="#8B4513"></a-box>
+      <a-box position="2 0.25 0" rotation="0 0 0" width="1" height="0.5" depth="1" color="#8B4513"></a-box>
+      <a-box position="0 0.25 2" rotation="0 0 0" width="1" height="0.5" depth="1" color="#8B4513"></a-box>
+      <a-box position="0 0.25 -2" rotation="0 0 0" width="1" height="0.5" depth="1" color="#8B4513"></a-box>
+      
+      <a-camera position="0 1.78 5"></a-camera>
     </a-scene>
+
+    <script>
+
+      const campCenterX = 0;
+      const campCenterZ = 0;
+      let treeCount = 10;
+      let bushCount = 10;
+      let twigCount = 5;
+      
+      for(let ring = 1; ring <= 5; ring++){
+          let radius = ring * 10; 
+
+          // Árvores
+          for(let i = 0; i < treeCount; i++){
+              let angle = (i / treeCount) * Math.PI * 2;
+              let x = campCenterX + radius * Math.cos(angle);
+              let z = campCenterZ + radius * Math.sin(angle);
+              let tree = document.createElement('a-entity');
+              tree.innerHTML = `
+                  <a-cylinder position="${x} 3 ${z}" radius="0.5" height="6" color="#8B4513"></a-cylinder>
+                  <a-cone position="${x} 6 ${z}" radius="2" height="3" color="#006400"></a-cone>
+                  <a-cone position="${x} 5 ${z}" radius="2" height="4" color="#006400"></a-cone>
+              `;
+              document.querySelector('a-scene').appendChild(tree);
+          }
+          treeCount *= 1.5;
+          
+          for(let i = 0; i < bushCount; i++){
+              let angle = 3 + (i / bushCount) * Math.PI * 2;
+              let x = campCenterX + (radius + 1) * Math.cos(angle);
+              let z = campCenterZ + (radius + 1) * Math.sin(angle);
+              let bush = document.createElement('a-sphere');
+              bush.setAttribute('position', `${x} 0.5 ${z}`);
+              bush.setAttribute('radius', '1');
+              bush.setAttribute('color', 'green');
+              document.querySelector('a-scene').appendChild(bush);
+          }
+
+          bushCount *= 1.5;
+          
+          for(let i = 0; i < twigCount; i++){
+              let angle = (i / twigCount) * Math.PI * 2;
+              let x = campCenterX + (radius - 1) * Math.cos(angle);
+              let z = campCenterZ + (radius - 1) * Math.sin(angle);
+              let twig = document.createElement('a-cylinder');
+              twig.setAttribute('position', `${x} 0.1 ${z}`);
+              twig.setAttribute('radius', '0.05');
+              twig.setAttribute('height', '2');
+              twig.setAttribute('color', '#8B4513');
+              twig.setAttribute('rotation', `0 0 ${Math.random() * 360}`);
+              document.querySelector('a-scene').appendChild(twig);
+          }
+          twigCount *= 1.5;
+      }
+    </script>
   </body>
   
 </html>
